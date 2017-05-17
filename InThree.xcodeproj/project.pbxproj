@@ -878,7 +878,7 @@
 				DEVELOPMENT_TEAM = 992D98C4QP;
 				INFOPLIST_FILE = InThree/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SweetPea.BlipBloop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SweetPea.BlipBloopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -895,7 +895,7 @@
 				DEVELOPMENT_TEAM = 992D98C4QP;
 				INFOPLIST_FILE = InThree/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SweetPea.BlipBloop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SweetPea.BlipBloopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
