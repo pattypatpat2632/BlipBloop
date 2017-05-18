@@ -13,6 +13,7 @@
 		EC05C7631EA45AC20031864A /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC05C7621EA45AC20031864A /* Score.swift */; };
 		EC05C7651EA460400031864A /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC05C7641EA460400031864A /* Beat.swift */; };
 		EC05C7671EA463A20031864A /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC05C7661EA463A20031864A /* Note.swift */; };
+		EC3CD3C61ECDF453008C78D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC3CD3C51ECDF453008C78D3 /* GoogleService-Info.plist */; };
 		EC44720F1EC27673009EB271 /* BlipLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44720E1EC27673009EB271 /* BlipLabel.swift */; };
 		EC4472111EC27757009EB271 /* BlipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4472101EC27757009EB271 /* BlipButton.swift */; };
 		EC4472171EC2ABE9009EB271 /* timeburnernormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4472161EC2ABE9009EB271 /* timeburnernormal.ttf */; };
@@ -26,7 +27,6 @@
 		EC4BD2141EA2C7F30076B4D0 /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BD2131EA2C7F30076B4D0 /* BeatView.swift */; };
 		EC4BD2171EA2D2CB0076B4D0 /* UIColorExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BD2161EA2D2CB0076B4D0 /* UIColorExtenstion.swift */; };
 		EC4BD2191EA2EEBE0076B4D0 /* SequencerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BD2181EA2EEBE0076B4D0 /* SequencerVC.swift */; };
-		EC5B3F9D1EB0DB0000410BD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC5B3F9C1EB0DB0000410BD2 /* GoogleService-Info.plist */; };
 		EC5B3FA11EB0E04E00410BD2 /* FirebaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5B3FA01EB0E04E00410BD2 /* FirebaseResponse.swift */; };
 		EC5B3FA31EB0E25000410BD2 /* BlipUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5B3FA21EB0E25000410BD2 /* BlipUser.swift */; };
 		EC5B3FA51EB0E31100410BD2 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5B3FA41EB0E31100410BD2 /* FirebaseManager.swift */; };
@@ -104,6 +104,7 @@
 		EC05C7621EA45AC20031864A /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		EC05C7641EA460400031864A /* Beat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
 		EC05C7661EA463A20031864A /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		EC3CD3C51ECDF453008C78D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC44720E1EC27673009EB271 /* BlipLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlipLabel.swift; sourceTree = "<group>"; };
 		EC4472101EC27757009EB271 /* BlipButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlipButton.swift; sourceTree = "<group>"; };
 		EC4472161EC2ABE9009EB271 /* timeburnernormal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = timeburnernormal.ttf; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		EC4BD2131EA2C7F30076B4D0 /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		EC4BD2161EA2D2CB0076B4D0 /* UIColorExtenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtenstion.swift; sourceTree = "<group>"; };
 		EC4BD2181EA2EEBE0076B4D0 /* SequencerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequencerVC.swift; sourceTree = "<group>"; };
-		EC5B3F9C1EB0DB0000410BD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC5B3FA01EB0E04E00410BD2 /* FirebaseResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseResponse.swift; sourceTree = "<group>"; };
 		EC5B3FA21EB0E25000410BD2 /* BlipUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlipUser.swift; sourceTree = "<group>"; };
 		EC5B3FA41EB0E31100410BD2 /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -250,8 +250,8 @@
 				EC4BD20A1EA29F820076B4D0 /* Controllers */,
 				EC4BD1E31EA29ECC0076B4D0 /* Assets.xcassets */,
 				EC4BD1E51EA29ECC0076B4D0 /* LaunchScreen.storyboard */,
+				EC3CD3C51ECDF453008C78D3 /* GoogleService-Info.plist */,
 				EC4BD1E81EA29ECC0076B4D0 /* Info.plist */,
-				EC5B3F9C1EB0DB0000410BD2 /* GoogleService-Info.plist */,
 			);
 			path = InThree;
 			sourceTree = "<group>";
@@ -396,6 +396,7 @@
 				EC4BD1D71EA29ECC0076B4D0 /* Resources */,
 				76D6158C0D2FBD0F5CA01C80 /* [CP] Embed Pods Frameworks */,
 				A751D606697FC2C6558A809F /* [CP] Copy Pods Resources */,
+				EC3CD3C41ECDF367008C78D3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -507,13 +508,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC5B3F9D1EB0DB0000410BD2 /* GoogleService-Info.plist in Resources */,
 				EC4BD1E71EA29ECC0076B4D0 /* LaunchScreen.storyboard in Resources */,
 				ECCE22F41EA84C95006691D8 /* CircleOfFifthsView.xib in Resources */,
 				EC4BD1E41EA29ECC0076B4D0 /* Assets.xcassets in Resources */,
 				EC4472171EC2ABE9009EB271 /* timeburnernormal.ttf in Resources */,
 				ECAE16EE1EA6FCD10013696C /* KeyboardView.xib in Resources */,
 				EC4472191EC2AD00009EB271 /* timeburnerbold.ttf in Resources */,
+				EC3CD3C61ECDF453008C78D3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +654,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		EC3CD3C41ECDF367008C78D3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/AudioKit.framework/fix-framework.sh\"";
 		};
 		FBA7BB45BA823C42BF3CB95D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -893,7 +907,7 @@
 			baseConfigurationReference = 8B88105CFF9CE7743CD2B4A2 /* Pods-InThree.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 992D98C4QP;
 				INFOPLIST_FILE = InThree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;

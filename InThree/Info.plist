@@ -19,13 +19,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allow BlipBloop to continually access your location?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow BlipBloop to access your location when you are using the app?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Because this app uses an audio framework, Apple requires that we obtain your permission to use your microphone. We will not record any audio.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>timeburnernormal.ttf</string>
