@@ -106,6 +106,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "BlipBloop"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

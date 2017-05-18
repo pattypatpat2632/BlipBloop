@@ -36,14 +36,14 @@ final class PartyManager {
                 print("OBSERVE FOUND VALUES")
                 print(partyValues)
                 let party = Party(dictionary: partyValues)
-                print("NEW PARTY CREATED: \(party.creator)")
+                print("NEW PARTY CREATED: \(String(describing: party.creator))")
                 for member in party.members {
                     print( "\(member.name)")
                 }
                 self.party = party
-                print("PARTY MANAGER NEW ID: \(self.party.id)")
+                print("PARTY MANAGER NEW ID: \(String(describing: self.party.id))")
                 self.party.id = partyID
-                print("PARTY MANAGER NEW ID: \(self.party.id)")
+                print("PARTY MANAGER NEW ID: \(String(describing: self.party.id))")
             }
             self.delegate?.partyChange()
         })
