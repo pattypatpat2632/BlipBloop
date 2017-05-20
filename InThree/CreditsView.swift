@@ -57,6 +57,6 @@ class CreditsView: UIView, BlipBloopView {
         creditsView.backgroundColor = colorScheme.model.baseColor
         creditsView.textColor = colorScheme.model.foregroundColor
         creditsView.font = UIFont(name: "TimeBurner", size: 20)
-        creditsView.text = "Hi! I'm Pat!\nI made BlipBloop.\nOpen source for this project can be found at: https://github.com/pattypatpat2632/InThree\nAny questions, email me at patoleary.dev@gmail.com"
+        creditsView.text = "Hi! I'm Pat!\nI made BlipBloop.\nOpen source for this project can be found at: https://github.com/pattypatpat2632/BlipBloop\nAny questions, email me at patoleary.dev@gmail.com"
     }
 }
