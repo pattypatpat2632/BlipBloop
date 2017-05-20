@@ -66,7 +66,9 @@ final class FirebaseManager {
 extension FirebaseManager {
     func loginUser(fromEmail email: String, password: String, completion: @escaping (FirebaseResponse) -> Void) {
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (firUser, error) in
-            if error == nil {
+            if let error = error {
+                completion(.failure(error.localizedDescription))
+            } else {
                 guard let uid = firUser?.uid else {
                     completion(.failure("Could not log in user"))
                     return
@@ -74,8 +76,6 @@ extension FirebaseManager {
                 self.observeCurrentBlipUser(uid: uid, completion: {
                     completion(.success("Login successful for user: \(FirebaseManager.sharedInstance.currentBlipUser?.name ?? "No Name")"))
                 })
-            } else {
-                completion(.failure("Could not log you in; check your email and password"))
             }
         })
     }

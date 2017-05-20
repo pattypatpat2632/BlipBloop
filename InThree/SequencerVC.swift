@@ -8,8 +8,6 @@
 
 import UIKit
 import AudioKit
-import CoreLocation
-
 
 
 class SequencerVC: UIViewController, NoteButtonDelegate {

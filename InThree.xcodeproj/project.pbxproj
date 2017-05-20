@@ -42,7 +42,6 @@
 		EC5B3FBE1EB13A6700410BD2 /* UIVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5B3FBD1EB13A6700410BD2 /* UIVCExtension.swift */; };
 		EC5B3FC01EB13EE800410BD2 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5B3FBF1EB13EE800410BD2 /* DashboardView.swift */; };
 		EC74C8A31EC1088B00666BDF /* PartySequencerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC74C8A21EC1088B00666BDF /* PartySequencerVC.swift */; };
-		EC74C8A51EC10A8900666BDF /* CitySequencerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC74C8A41EC10A8900666BDF /* CitySequencerVC.swift */; };
 		EC74C8AB1EC1228E00666BDF /* LightTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC74C8AA1EC1228E00666BDF /* LightTrigger.swift */; };
 		EC7C14661EB67D52009FACDA /* BlipUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7C14651EB67D51009FACDA /* BlipUserCell.swift */; };
 		EC7C14681EB780FF009FACDA /* SequencerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7C14671EB780FF009FACDA /* SequencerMode.swift */; };
@@ -139,7 +138,6 @@
 		EC5B3FBD1EB13A6700410BD2 /* UIVCExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIVCExtension.swift; sourceTree = "<group>"; };
 		EC5B3FBF1EB13EE800410BD2 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		EC74C8A21EC1088B00666BDF /* PartySequencerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySequencerVC.swift; sourceTree = "<group>"; };
-		EC74C8A41EC10A8900666BDF /* CitySequencerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySequencerVC.swift; sourceTree = "<group>"; };
 		EC74C8AA1EC1228E00666BDF /* LightTrigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightTrigger.swift; sourceTree = "<group>"; };
 		EC7C14651EB67D51009FACDA /* BlipUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlipUserCell.swift; sourceTree = "<group>"; };
 		EC7C14671EB780FF009FACDA /* SequencerMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequencerMode.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 				EC4BD1DC1EA29ECC0076B4D0 /* AppDelegate.swift */,
 				EC5B3FA61EB0E81100410BD2 /* AppController.swift */,
 				EC4BD2181EA2EEBE0076B4D0 /* SequencerVC.swift */,
-				EC74C8A41EC10A8900666BDF /* CitySequencerVC.swift */,
 				EC74C8A21EC1088B00666BDF /* PartySequencerVC.swift */,
 				EC5B3FA81EB0E92100410BD2 /* LoginVC.swift */,
 				EC5B3FAA1EB0E9E000410BD2 /* DashboardVC.swift */,
@@ -705,7 +702,6 @@
 				EC9028B21EC35FB200027FCE /* Party.swift in Sources */,
 				ECDADFDE1ECB5B6C00480BA3 /* PartyManager.swift in Sources */,
 				EC9559761EA59EFB008FA5FA /* SequencerView.swift in Sources */,
-				EC74C8A51EC10A8900666BDF /* CitySequencerVC.swift in Sources */,
 				EC5B3FA51EB0E31100410BD2 /* FirebaseManager.swift in Sources */,
 				EC5B3FAF1EB0EEB100410BD2 /* LoginNavC.swift in Sources */,
 				EC5B3FBC1EB10A9000410BD2 /* BlipBloopView.swift in Sources */,
