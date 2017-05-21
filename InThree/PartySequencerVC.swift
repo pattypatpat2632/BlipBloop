@@ -35,9 +35,11 @@ class PartySequencerVC: SequencerVC {
         FirebaseManager.sharedInstance.currentBlipUser?.isInParty = false
         guard let currentUser = currentUser else {return}
         sequencerEngine.generateSequence(fromScore: Score.empty)
+        sequencerEngine.stopAll()
         PartyManager.sharedInstance.remove(member: currentUser, fromPartyID: partyID) {
-            super.returnToDashboard()
-            MultipeerManager.sharedInstance.startAdvertising()
+            self.dismiss(animated: true, completion: {
+                MultipeerManager.sharedInstance.startAdvertising()
+            })
         }
     }
 }

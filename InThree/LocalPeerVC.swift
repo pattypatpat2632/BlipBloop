@@ -112,7 +112,7 @@ extension LocalPeerVC: LocalPeerViewDelegate {
             let partySequencerVC = PartySequencerVC()
             partySequencerVC.connectedPeers = self.selectedPeers
             DispatchQueue.main.async {
-                self.navigationController?.pushViewController(partySequencerVC, animated: true)
+                self.present(partySequencerVC, animated: true, completion: nil)
                 partySequencerVC.partyID = partyID
             }
         }
