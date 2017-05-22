@@ -107,7 +107,7 @@ extension SequencerVC: SequencerViewDelegate {
         FirebaseManager.sharedInstance.currentBlipUser?.isInParty = false
         sequencerEngine.stopAll() //TODO: add audio fadeout
         DispatchQueue.main.async {
-            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }

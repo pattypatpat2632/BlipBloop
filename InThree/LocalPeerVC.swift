@@ -4,7 +4,7 @@
 //
 //  Created by Patrick O'Leary on 4/27/17.
 //  Copyright © 2017 Patrick O'Leary. All rights reserved.
-//
+
 
 import UIKit
 
@@ -112,7 +112,7 @@ extension LocalPeerVC: LocalPeerViewDelegate {
             let partySequencerVC = PartySequencerVC()
             partySequencerVC.connectedPeers = self.selectedPeers
             DispatchQueue.main.async {
-                self.navigationController?.pushViewController(partySequencerVC, animated: true)
+                self.present(partySequencerVC, animated: true, completion: nil)
                 partySequencerVC.partyID = partyID
             }
         }

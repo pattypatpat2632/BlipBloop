@@ -33,7 +33,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     
     func goToSoloMode() {
         let sequencerVC = SequencerVC()
-        self.navigationController?.pushViewController(sequencerVC, animated: true)
+        self.present(sequencerVC, animated: true, completion: nil)
     }
     
     func goToInstructions() {
