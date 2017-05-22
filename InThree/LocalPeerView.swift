@@ -14,7 +14,7 @@ class LocalPeerView: UIView, BlipBloopView {
     let peerTable = UITableView()
     let continueButton = BlipButton()
     var backButton = BlipButton()
-    var delegate: LocalPeerViewDelegate?
+    weak var delegate: LocalPeerViewDelegate?
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,7 +100,7 @@ class LocalPeerView: UIView, BlipBloopView {
     
 }
 
-protocol LocalPeerViewDelegate {
+protocol LocalPeerViewDelegate: class {
     func goToPartySquencer()
     func returnToDashboard()
 }

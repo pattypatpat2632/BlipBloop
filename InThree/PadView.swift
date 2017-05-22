@@ -14,7 +14,7 @@ class PadView: UIView, BlipBloopView {
     let button = UIButton()
     var buttonIsOn: Bool = false
     var padIndex = ScoreIndex(beatIndex: 0, noteIndex: 0)
-    var delegate: PadViewDelegate?
+    weak var delegate: PadViewDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -68,7 +68,7 @@ class PadView: UIView, BlipBloopView {
     }
 }
 
-protocol PadViewDelegate {
+protocol PadViewDelegate: class {
     func padValueChanged(scoreIndex: ScoreIndex, padIsOn: Bool)
 }
 

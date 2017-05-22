@@ -12,7 +12,7 @@ class DashboardView: UIView, BlipBloopView {
     
     let soloModeButton = BlipButton()
     let partyModeButton = BlipButton()
-    var delegate: DashboardViewDelegate? = nil
+    weak var delegate: DashboardViewDelegate? = nil
     let logoutButton = BlipButton()
     let instructionsButton = BlipButton()
 
@@ -105,7 +105,7 @@ class DashboardView: UIView, BlipBloopView {
     }
 }
 
-protocol DashboardViewDelegate {
+protocol DashboardViewDelegate: class {
     func goToPartyMode()
     func goToSoloMode()
     func goToInstructions()

@@ -14,7 +14,7 @@ class ForgotPasswordView: UIView, BlipBloopView {
     let emailField = BlipTextField()
     let submitButton = BlipButton()
     let backButton = BlipButton()
-    var delegate: ForgotPasswordViewDelegate?
+    weak var delegate: ForgotPasswordViewDelegate?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -89,7 +89,7 @@ class ForgotPasswordView: UIView, BlipBloopView {
     
 }
 
-protocol ForgotPasswordViewDelegate {
+protocol ForgotPasswordViewDelegate: class {
     func submit()
     func goBack()
 }

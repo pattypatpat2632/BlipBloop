@@ -19,7 +19,7 @@ class BeatView: UIView, BlipBloopView {
     var allPads = [PadView]()
     let stackView = UIStackView()
     
-    var delegate: BeatViewDelegate?
+    weak var delegate: BeatViewDelegate?
     
     var beat = Beat(rhythm: .four)
     var displayedViewCount: Int = 4
@@ -112,7 +112,7 @@ class BeatView: UIView, BlipBloopView {
 }
 
 // MARK: Delegate protocol
-protocol BeatViewDelegate {
+protocol BeatViewDelegate: class {
     func addStep(forBeatNum beatNum: Int, newStepCount steps: Int)
     func removeStep(forBeatNum beatNum: Int, newStepCount: Int)
 }

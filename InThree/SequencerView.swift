@@ -17,7 +17,7 @@ class SequencerView: UIView, BlipBloopView {
     let circleOfFifthsView = CircleOfFifthsView()
     let backButton = BlipButton()
     
-    var delegate: SequencerViewDelegate?
+    weak var delegate: SequencerViewDelegate?
     
     var allViews = [UIView]()
     var allBeatViews = [BeatView]()
@@ -103,7 +103,7 @@ class SequencerView: UIView, BlipBloopView {
     
 }
 
-protocol SequencerViewDelegate {
+protocol SequencerViewDelegate: class {
     func returnToDashboard()
 }
 

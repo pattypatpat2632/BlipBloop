@@ -13,7 +13,7 @@ class NoteButton: UIButton, BlipBloopView {
     
     var noteValue: MIDINoteNumber = 60
     var scoreIndex: ScoreIndex?
-    var delegate: NoteButtonDelegate?
+    weak var delegate: NoteButtonDelegate?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,7 +47,7 @@ class NoteButton: UIButton, BlipBloopView {
     
 }
 
-protocol NoteButtonDelegate {
+protocol NoteButtonDelegate: class {
     func respondTo(noteNumber: MIDINoteNumber, scoreIndex: ScoreIndex)
 }
 
