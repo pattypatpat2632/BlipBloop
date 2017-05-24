@@ -36,10 +36,9 @@ class PartySequencerVC: SequencerVC {
         guard let currentUser = currentUser else {return}
         sequencerEngine.generateSequence(fromScore: Score.empty)
         sequencerEngine.stopAll()
+        self.dismiss(animated: true, completion: nil)
         PartyManager.sharedInstance.remove(member: currentUser, fromPartyID: partyID) {
-            self.dismiss(animated: true, completion: {
                 MultipeerManager.sharedInstance.startAdvertising()
-            })
         }
     }
 }

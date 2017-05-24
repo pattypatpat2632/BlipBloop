@@ -28,7 +28,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     func goToPartyMode() {
         let partyVC = LocalPeerVC()
         MultipeerManager.sharedInstance.startBrowsing()
-        self.navigationController?.pushViewController(partyVC, animated: true)
+        self.present(partyVC, animated: true, completion: nil)
     }
     
     func goToSoloMode() {
@@ -114,7 +114,7 @@ extension DashboardVC: MultipeerDelegate {
                     let partyVC = PartySequencerVC()
                     partyVC.partyID = partyID
                     DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(partyVC, animated: true)
+                        self.present(partyVC, animated: true, completion: nil)
                     }
                     
                 }

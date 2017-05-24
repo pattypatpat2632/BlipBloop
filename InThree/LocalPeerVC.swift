@@ -119,7 +119,7 @@ extension LocalPeerVC: LocalPeerViewDelegate {
     }
     
     func returnToDashboard() {
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
