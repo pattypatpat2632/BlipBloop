@@ -21,7 +21,6 @@ class AppController: UIViewController {
         addNotifcationObservers()
         loadInitialViewController()
     }
-
 }
 
 //MARK: - Notification Observers

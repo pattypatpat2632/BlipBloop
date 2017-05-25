@@ -39,7 +39,7 @@ class CreateUserVC: UIViewController, UserAlert {
                         NotificationCenter.default.post(name: .closeLoginVC, object: nil)
                     }
                 case .failure(let failString):
-                    print(failString)
+                    self.alertUser(with: failString, viewController: self, completion: nil)
                 }
             }
         }

@@ -23,6 +23,7 @@ class SequencerVC: UIViewController, NoteButtonDelegate {
     
     
     override func viewDidLoad() {
+       
         FirebaseManager.sharedInstance.currentBlipUser?.isInParty = true
         super.viewDidLoad()
         self.view = sequencerView

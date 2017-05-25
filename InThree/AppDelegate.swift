@@ -20,12 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIRApp.configure()
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
-            print("AVAudioSession Category Playback OK")
-        } catch {
-            print(error)
-        }
+        
        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         guard let window = self.window else { fatalError("no window") }

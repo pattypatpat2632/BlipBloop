@@ -27,6 +27,7 @@ final class MultipeerManager: NSObject {
     var serviceBrowser: MCNearbyServiceBrowser?
 
     var multipeerDelegate: MultipeerDelegate?
+    var browsingDelegate: BrowsingDelegate?
     
     lazy var session: MCSession = {
         
@@ -111,15 +112,15 @@ extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
 //MARK: Browser Delegate
 extension MultipeerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        print("lost peer: \(peerID.displayName)")
+        self.updateAvailablePeers()
     }
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-        print("Did not start browsing for peers")//TODO: INdicate to user that browser could not be established
+        browsingDelegate?.didNotConnect(withMessage: "Unable to connect to network.")
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
 
-        browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 30.0) //If
+        browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 30.0)
         
     }
 }
@@ -127,7 +128,7 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
 extension MultipeerManager: MCSessionDelegate {
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         do {
-            let partyDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] ?? [:]//TODO: handle error
+            let partyDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] ?? [:]
             for user in FirebaseManager.sharedInstance.allBlipUsers {
                 if user.uid == peerID.displayName {
                     guard let partyID = partyDict["partyid"] else {return}
@@ -136,7 +137,6 @@ extension MultipeerManager: MCSessionDelegate {
                 }
             }
         } catch {
-            print("could not convert party ID back to String")
         }
     }
     
@@ -169,6 +169,10 @@ extension MultipeerManager: MCSessionDelegate {
 protocol MultipeerDelegate {
     func askPermission(fromInvitee invitee: BlipUser, completion: @escaping (Bool) -> Void)
     func respondToInvite(fromUser blipUser: BlipUser, withPartyID partyID: String)
+}
+
+protocol BrowsingDelegate {
+    func didNotConnect(withMessage: String)
 }
 
 

@@ -8,12 +8,13 @@
 
 import UIKit
 
-class LocalPeerVC: UIViewController {
+class LocalPeerVC: UIViewController, UserAlert {
     
     let localPeerView = LocalPeerView()
     let currentUser = FirebaseManager.sharedInstance.currentBlipUser
     
     var localPeers: [BlipUser] = MultipeerManager.sharedInstance.availablePeers
+    
     var selectedPeers = [BlipUser]() {
         didSet {
             for peer in selectedPeers {
@@ -31,6 +32,7 @@ class LocalPeerVC: UIViewController {
         localPeerView.delegate = self
         self.view = localPeerView
         
+        MultipeerManager.sharedInstance.browsingDelegate = self
         MultipeerManager.sharedInstance.startBrowsing()
         NotificationCenter.default.addObserver(self, selector: #selector(updateLocalPeers), name: .availablePeersUpdated, object: nil)
     }
@@ -45,9 +47,7 @@ class LocalPeerVC: UIViewController {
     func updateLocalPeers() {
         print("updating local peers")
         self.localPeers = MultipeerManager.sharedInstance.availablePeers
-        for peer in self.localPeers {
-            print(peer.name)
-        }
+        localPeers = localPeers.filter{$0.invitesEnabled}
         DispatchQueue.main.async {
             if self.localPeers.count > 0 {
                 self.localPeerView.changeTitle(to: "Invite your friends to join:")
@@ -57,6 +57,7 @@ class LocalPeerVC: UIViewController {
             self.localPeerView.peerTable.reloadData()
         }
     }
+
     
 }
 // MARK: Tableview delegate and data source
@@ -122,6 +123,14 @@ extension LocalPeerVC: LocalPeerViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension LocalPeerVC: BrowsingDelegate {
+    func didNotConnect(withMessage: String) {
+        alertUser(with: withMessage, viewController: self) { 
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 

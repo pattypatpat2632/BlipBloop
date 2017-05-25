@@ -14,14 +14,16 @@ struct BlipUser {
     let uid: String
     let email: String
     var isInParty: Bool = false
+    var invitesEnabled: Bool = false
 }
 
 extension BlipUser {
     
-    init(uid: String, dictionary: [String: String]) {
+    init(uid: String, dictionary: [String: Any]) {
         self.uid = uid
-        self.name = dictionary["name"] ?? "No Name"
-        self.email = dictionary["email"] ?? "No Email"
+        self.name = dictionary["name"] as? String ?? "No Name"
+        self.email = dictionary["email"] as? String ?? "No Email"
+        self.invitesEnabled = dictionary["invitesEnabled"] as? Bool ?? false
     }
     
     init?(jsonData: Data) {
@@ -33,12 +35,13 @@ extension BlipUser {
         }
     }
     
-    init?(dictionary: [String: [String: String]]) {
+    init?(dictionary: [String: [String: Any]]) {
         guard let uid = dictionary.keys.first else {return nil}
         self.uid = uid
         let properties = dictionary[uid] ?? [:]
-        self.name = properties["name"] ?? "No name"
-        self.email = properties["email"] ?? "No email"
+        self.name = properties["name"] as? String ?? "No name"
+        self.email = properties["email"] as? String ?? "No email"
+        self.invitesEnabled = properties["invitesEnabled"] as? Bool ?? false
     }
     
     func jsonData() -> Data? {

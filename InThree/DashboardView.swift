@@ -15,6 +15,8 @@ class DashboardView: UIView, BlipBloopView {
     weak var delegate: DashboardViewDelegate? = nil
     let logoutButton = BlipButton()
     let instructionsButton = BlipButton()
+    let enableInviteLabel = BlipLabel()
+    let enableInviteSwitch = UISwitch()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,16 +49,28 @@ class DashboardView: UIView, BlipBloopView {
         partyModeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
         partyModeButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
         
+        addSubview(enableInviteLabel)
+        enableInviteLabel.translatesAutoresizingMaskIntoConstraints = false
+        enableInviteLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        enableInviteLabel.topAnchor.constraint(equalTo: partyModeButton.bottomAnchor, constant: 10).isActive = true
+        enableInviteLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
+        enableInviteLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05).isActive = true
+        
+        addSubview(enableInviteSwitch)
+        enableInviteSwitch.translatesAutoresizingMaskIntoConstraints = false
+        enableInviteSwitch.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        enableInviteSwitch.topAnchor.constraint(equalTo: enableInviteLabel.bottomAnchor).isActive = true
+        
         addSubview(logoutButton)
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        logoutButton.topAnchor.constraint(equalTo: partyModeButton.bottomAnchor, constant: 10).isActive = true
+        logoutButton.topAnchor.constraint(equalTo: enableInviteSwitch.bottomAnchor, constant: 20).isActive = true
         logoutButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
         logoutButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
         
         addSubview(instructionsButton)
         instructionsButton.translatesAutoresizingMaskIntoConstraints = false
-        instructionsButton.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 20).isActive = true
+        instructionsButton.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 30).isActive = true
         instructionsButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         instructionsButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
         instructionsButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
@@ -72,6 +86,13 @@ class DashboardView: UIView, BlipBloopView {
         
         logoutButton.setTitle("Logout", for: .normal)
         logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
+        
+        enableInviteLabel.text = "Enable party invites from other users?"
+        enableInviteLabel.changeFontSize(to: 20)
+        
+        enableInviteSwitch.isOn = UserDefaults.standard.bool(forKey: "enable-invites")
+        enableInviteSwitch.addTarget(self, action: #selector(inviteSwitchPressed), for: .valueChanged)
+        inviteSwitchPressed()
         
         instructionsButton.setTitle("Instructions", for: .normal)
         instructionsButton.layer.borderWidth = 0
@@ -103,6 +124,10 @@ class DashboardView: UIView, BlipBloopView {
             self.delegate?.goToInstructions()
         }
     }
+    
+    func inviteSwitchPressed() {
+        self.delegate?.inviteSwitchPressed(newState: enableInviteSwitch.isOn)
+    }
 }
 
 protocol DashboardViewDelegate: class {
@@ -110,4 +135,5 @@ protocol DashboardViewDelegate: class {
     func goToSoloMode()
     func goToInstructions()
     func logout()
+    func inviteSwitchPressed(newState: Bool)
 }

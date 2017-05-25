@@ -38,6 +38,12 @@ struct SequencerEngine {
         _ = sequencer.newTrack()
         
         AudioKit.output = verb
+        do {
+            try AKSettings.setSession(category: .playAndRecord, with: .defaultToSpeaker)
+        } catch {
+            
+        }
+        AKSettings.playbackWhileMuted = true
         AudioKit.start()
         midiNode.enableMIDI(midi.client, name: "midiNode midi in")
         sequencer.setTempo(120.0)

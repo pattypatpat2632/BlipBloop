@@ -13,6 +13,7 @@ import Foundation
 class DashboardVC: UIViewController, DashboardViewDelegate {
     
     let dashboardView = DashboardView()
+    var invitesEnabled: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,11 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     func goToInstructions() {
         let instructionsVC = InstructionsVC()
         navigationController?.pushViewController(instructionsVC, animated: true)
+    }
+    
+    func inviteSwitchPressed(newState: Bool) {
+        self.invitesEnabled = newState
+        UserDefaults.standard.set(newState, forKey: "enable-invites")
     }
     
     func logout() {
@@ -82,24 +88,12 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
 
 extension DashboardVC: MultipeerDelegate {
     func askPermission(fromInvitee invitee: BlipUser, completion: @escaping (Bool) -> Void) {
-        if FirebaseManager.sharedInstance.currentBlipUser?.isInParty == false {
-            let alertController = UIAlertController(title: "\(invitee.name) is starting a party", message: "Would you like to connect to \(invitee.name) so that you can be invited?", preferredStyle: .alert)
-            
-            let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
-                completion(false)
-            }
-            alertController.addAction(noAction)
-            
-            let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
-                completion(true)
-            }
-            alertController.addAction(yesAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
+        completion(true)
     }
     
     func respondToInvite(fromUser blipUser: BlipUser, withPartyID partyID: String) {
-        if FirebaseManager.sharedInstance.currentBlipUser?.isInParty == false {
+        guard let currentUser = FirebaseManager.sharedInstance.currentBlipUser else {return}
+        if currentUser.isInParty == false && self.invitesEnabled {
             print("asked to join party: \(partyID)")
             let alertController = UIAlertController(title: "\(blipUser.name) has invited you to party!", message: "Would you like to join?", preferredStyle: .alert)
             
@@ -123,6 +117,5 @@ extension DashboardVC: MultipeerDelegate {
             
             self.present(alertController, animated: true, completion: nil)
         }
-        
     }
 }
