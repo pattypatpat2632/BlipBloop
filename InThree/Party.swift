@@ -34,10 +34,7 @@ struct Party {
         
         var membersDict = [String: Any]()
         for member in members {
-            for (key, value) in member.asDictionary() {
-                membersDict[key] = value
-            }
-            
+            membersDict[member.uid] = true
         }
         
         let dictionary: [String: Any] = [
@@ -84,16 +81,9 @@ extension Party {
         self.turnCount = turnCount
         self.creator = creator
         
-        var members = [BlipUser]()
-        guard let membersDict = dictionary["members"] as? [String: [String: Any]] else {return}
-        for (key, value) in membersDict {
-            let newMember = BlipUser(uid: key, dictionary: value )
-            members.append(newMember)
-        }
-        self.members = members
+        let membersList = dictionary["members"] as? [String: Bool] ?? [:]
+        
+        self.members = FirebaseManager.sharedInstance.allBlipUsers.filter{membersList.keys.contains($0.uid)}
     }
-    
-    
-    
 }
 

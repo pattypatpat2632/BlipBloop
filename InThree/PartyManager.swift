@@ -55,10 +55,10 @@ final class PartyManager {
     }
     
     func join(partyWithID partyID: String, completion: @escaping () -> Void) {
-        if let currentUserDict = currentUser?.asDictionary() {
-            for (key, value) in currentUserDict {
-                partiesRef.child(partyID).child("members").child(key).setValue(value)
-            }
+        if let currentUser = currentUser {
+            
+            partiesRef.child(partyID).child("members").child(currentUser.uid).setValue(true)
+            
         }
         self.party.id = partyID
         completion()
