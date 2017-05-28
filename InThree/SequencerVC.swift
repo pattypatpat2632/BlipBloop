@@ -107,7 +107,9 @@ extension SequencerVC: PadViewDelegate {
 
 extension SequencerVC: SequencerViewDelegate {
     func returnToDashboard() {
-        FirebaseManager.sharedInstance.currentBlipUser?.isInParty = false
+        if let currentUser = FirebaseManager.sharedInstance.currentBlipUser {
+            FirebaseManager.sharedInstance.updateIsInParty(user: currentUser, with: false)
+        }
         sequencerEngine.stopAll() //TODO: add audio fadeout
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)

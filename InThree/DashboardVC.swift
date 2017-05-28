@@ -25,7 +25,6 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        makeAvailableForParties()
         dashboardView.peerTable.reloadData()
     }
     
@@ -74,12 +73,6 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
         }
     }
     
-    func makeAvailableForParties(){
-        if let currentUser = FirebaseManager.sharedInstance.currentBlipUser {
-            FirebaseManager.sharedInstance.updateIsInParty(user: currentUser, with: false)
-        }
-    }
-    
     func checkForLogin() {
         FirebaseManager.sharedInstance.checkForCurrentUser { (userExists) in
             if userExists {
@@ -88,7 +81,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
                 self.observeAllUsers()
                 self.setTableView()
                 self.setMultipeer()
-                self.makeAvailableForParties()
+                
             } else {
                 NotificationCenter.default.post(name: .closeDashboardVC, object: nil)
             }
