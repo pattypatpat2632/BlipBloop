@@ -4,7 +4,6 @@
 //
 //  Created by Patrick O'Leary on 5/16/17.
 //  Copyright © 2017 Patrick O'Leary. All rights reserved.
-//
 
 import Foundation
 import Firebase
