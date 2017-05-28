@@ -32,7 +32,6 @@ class LocalPeerVC: UIViewController, UserAlert {
         localPeerView.delegate = self
         self.view = localPeerView
         
-        MultipeerManager.sharedInstance.browsingDelegate = self
         MultipeerManager.sharedInstance.startBrowsing()
         NotificationCenter.default.addObserver(self, selector: #selector(updateLocalPeers), name: .availablePeersUpdated, object: nil)
     }
@@ -125,12 +124,6 @@ extension LocalPeerVC: LocalPeerViewDelegate {
     
 }
 
-extension LocalPeerVC: BrowsingDelegate {
-    func didNotConnect(withMessage: String) {
-        alertUser(with: withMessage, viewController: self) { 
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-}
+
 
 

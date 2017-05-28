@@ -18,9 +18,11 @@ final class FirebaseManager {
     let userRef = FIRDatabase.database().reference().child("users")
     let locationRef = FIRDatabase.database().reference().child("locations")
     var allBlipUsers = [BlipUser]()
+    var inviteableUsers = [BlipUser]()
+    
     var allLocationScores = [Score]()
     var currentBlipUser: BlipUser? = nil
-    var delegate: FirebaseManagerDelegate?
+    var locationDelegate: LocationManagerDelegate?
     
     private init() {}
     
@@ -36,11 +38,11 @@ final class FirebaseManager {
             } else {
                 completion(.failure("Could not observe Blip users"))
             }
+            MultipeerManager.sharedInstance.updateAvailablePeers()
         })
     }
     
     func createUser(fromEmail email: String, name: String, andPassword password: String, completion: @escaping (FirebaseResponse) -> Void) {
-        print("create user called")
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (firUser, error) in
             if let error = error {
                 completion(.failure(error.localizedDescription))
@@ -62,8 +64,9 @@ final class FirebaseManager {
     private func storeNew(blipUser: BlipUser, completion: () -> Void) {
         let post = [
             "name": blipUser.name,
-            "email": blipUser.email
-        ]
+            "email": blipUser.email,
+            "invitedEnabled": blipUser.invitesEnabled
+            ] as [String : Any]
         dataRef.child("users").child(blipUser.uid).updateChildValues(post)
         completion()
     }
@@ -151,14 +154,23 @@ extension FirebaseManager {
                     }
                 }
             }
-            self.delegate?.updateLocationScores()
+            self.locationDelegate?.updateLocationScores()
         })
     }
 }
 
-protocol FirebaseManagerDelegate {
+//MARK: Local Peers Functions
+extension FirebaseManager {
+    
+    func updateInviteable(user: BlipUser, with state: Bool) {
+        userRef.child(user.uid).child("invitesEnabled").setValue(state)
+    }
+}
+
+protocol LocationManagerDelegate {
     func updateLocationScores()
 }
+
 
 
 

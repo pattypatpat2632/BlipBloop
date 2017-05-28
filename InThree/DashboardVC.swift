@@ -10,10 +10,12 @@ import UIKit
 import Foundation
 
 
-class DashboardVC: UIViewController, DashboardViewDelegate {
+class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     
     let dashboardView = DashboardView()
     var invitesEnabled: Bool = false
+    var inviteablePeers = [BlipUser]()
+    var selectedPeers = [BlipUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +29,21 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     }
     
     func goToPartyMode() {
-        let partyVC = LocalPeerVC()
-        MultipeerManager.sharedInstance.startBrowsing()
-        self.present(partyVC, animated: true, completion: nil)
+        FirebaseManager.sharedInstance.currentBlipUser?.isInParty = true
+        guard let currentUser = FirebaseManager.sharedInstance.currentBlipUser else {
+            let message = "Connection lost, could not create party."
+            alertUser(with: message, viewController: self, completion: nil)
+            return
+        }
+        PartyManager.sharedInstance.newParty(byUser: currentUser) { (partyID) in
+            MultipeerManager.sharedInstance.invite(blipUsers: self.selectedPeers, toParty: PartyManager.sharedInstance.party)
+            let partySequencerVC = PartySequencerVC()
+            partySequencerVC.connectedPeers = self.selectedPeers//TODO: this might be an error, check on it
+            DispatchQueue.main.async {
+                self.present(partySequencerVC, animated: true, completion: nil)
+                partySequencerVC.partyID = partyID
+            }
+        }
     }
     
     func goToSoloMode() {
@@ -44,6 +58,8 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     
     func inviteSwitchPressed(newState: Bool) {
         self.invitesEnabled = newState
+        guard let currentUser = FirebaseManager.sharedInstance.currentBlipUser else {return}
+        FirebaseManager.sharedInstance.updateInviteable(user: currentUser, with: newState)
         UserDefaults.standard.set(newState, forKey: "enable-invites")
     }
     
@@ -64,9 +80,9 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
             if userExists {
                 self.view = self.dashboardView
                 self.dashboardView.delegate = self
-                MultipeerManager.sharedInstance.startAdvertising()
-                MultipeerManager.sharedInstance.multipeerDelegate = self
                 self.observeAllUsers()
+                self.setTableView()
+                self.setMultipeer()
             } else {
                 NotificationCenter.default.post(name: .closeDashboardVC, object: nil)
             }
@@ -75,47 +91,13 @@ class DashboardVC: UIViewController, DashboardViewDelegate {
     
     func observeAllUsers() {
         FirebaseManager.sharedInstance.observeAllBlipUsers { (response) in
-            switch response {
-            case .success(let successString):
-                print(successString)
-            case .failure(let failString):
-                print(failString)
-            }
+            //            switch response {
+            //            case .success(let successString):
+            //                print(successString)
+            //            case .failure(let failString):
+            //                print(failString)
+            //            }
         }
     }
     
-}
-
-extension DashboardVC: MultipeerDelegate {
-    func askPermission(fromInvitee invitee: BlipUser, completion: @escaping (Bool) -> Void) {
-        completion(true)
-    }
-    
-    func respondToInvite(fromUser blipUser: BlipUser, withPartyID partyID: String) {
-        guard let currentUser = FirebaseManager.sharedInstance.currentBlipUser else {return}
-        if currentUser.isInParty == false && self.invitesEnabled {
-            print("asked to join party: \(partyID)")
-            let alertController = UIAlertController(title: "\(blipUser.name) has invited you to party!", message: "Would you like to join?", preferredStyle: .alert)
-            
-            let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
-                print("User did not join party :(")
-            }
-            alertController.addAction(noAction)
-            
-            let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
-                FirebaseManager.sharedInstance.currentBlipUser?.isInParty = true
-                PartyManager.sharedInstance.join(partyWithID: partyID) {
-                    let partyVC = PartySequencerVC()
-                    partyVC.partyID = partyID
-                    DispatchQueue.main.async {
-                        self.present(partyVC, animated: true, completion: nil)
-                    }
-                    
-                }
-            }
-            alertController.addAction(yesAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
 }

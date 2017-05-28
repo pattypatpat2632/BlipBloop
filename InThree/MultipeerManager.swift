@@ -15,19 +15,12 @@ final class MultipeerManager: NSObject {
     let service = "blipbloop-2632"
     var currentUser = FirebaseManager.sharedInstance.currentBlipUser
     let myPeerID = MCPeerID(displayName: (FirebaseManager.sharedInstance.currentBlipUser?.uid)!)
-    var availablePeers = [BlipUser]() {
-        didSet{
-            for peer in availablePeers {
-                print(peer.name)
-            }
-        }
-    }
+    var availablePeers = [BlipUser]()
     
     var serviceAdvertiser: MCNearbyServiceAdvertiser?
     var serviceBrowser: MCNearbyServiceBrowser?
 
-    var multipeerDelegate: MultipeerDelegate?
-    var browsingDelegate: BrowsingDelegate?
+    var delegate: MultipeerDelegate?
     
     lazy var session: MCSession = {
         
@@ -61,25 +54,24 @@ final class MultipeerManager: NSObject {
     func updateAvailablePeers() {
         print("UPDATING AVAILABLE PEERS")
         availablePeers.removeAll()
+        var allPeers = [BlipUser]()
         for peer in session.connectedPeers {
             for user in FirebaseManager.sharedInstance.allBlipUsers {
                 if user.uid == peer.displayName {
-                    availablePeers.append(user)
-                    break
+                    allPeers.append(user)
                 }
             }
         }
-        print("post notification")
-        NotificationCenter.default.post(name: .availablePeersUpdated, object: nil)
+        availablePeers = allPeers.filter{$0.invitesEnabled}
+        availablePeers.forEach{print($0.name)}
+        delegate?.availablePeersUpdate()
     }
     
     func invite(blipUsers: [BlipUser], toParty party: Party) {
         if let partyID = party.id {
             print("Inviting users with valid party ID")
             do {
-                print("writing json")
                 let json = try JSONSerialization.data(withJSONObject:["partyid": partyID] , options: [])
-                print("json success, sending json to session")
                 try session.send(json, toPeers: session.connectedPeers, with: .reliable)
             } catch {
                 print("could not convert party ID into JSON and send to connected peers")
@@ -92,13 +84,13 @@ final class MultipeerManager: NSObject {
 //MARK: Advertiser Delegate
 extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
-        print("Boo")// TODO: indicate to user that there is no available connection to broadcast advertiser
+        delegate?.didNotConnect(withMessage: "Unable to connect to network for party mode. Please check your Wi-Fi connection.")
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         for user in FirebaseManager.sharedInstance.allBlipUsers {
             if user.uid == peerID.displayName {
-                multipeerDelegate?.askPermission(fromInvitee: user, completion: { (permission) in
+                delegate?.askPermission(fromInvitee: user, completion: { (permission) in
                     if permission {
                         invitationHandler(true, self.session)
                     }
@@ -115,7 +107,7 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
         self.updateAvailablePeers()
     }
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-        browsingDelegate?.didNotConnect(withMessage: "Unable to connect to network.")
+        delegate?.didNotConnect(withMessage: "Unable to connect to network to find other BlipBloop users. Please check your Wi-Fi connection.")
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
@@ -132,7 +124,7 @@ extension MultipeerManager: MCSessionDelegate {
             for user in FirebaseManager.sharedInstance.allBlipUsers {
                 if user.uid == peerID.displayName {
                     guard let partyID = partyDict["partyid"] else {return}
-                    multipeerDelegate?.respondToInvite(fromUser: user, withPartyID: partyID)
+                    delegate?.respondToInvite(fromUser: user, withPartyID: partyID)
                     break
                 }
             }
@@ -169,11 +161,11 @@ extension MultipeerManager: MCSessionDelegate {
 protocol MultipeerDelegate {
     func askPermission(fromInvitee invitee: BlipUser, completion: @escaping (Bool) -> Void)
     func respondToInvite(fromUser blipUser: BlipUser, withPartyID partyID: String)
+    func didNotConnect(withMessage: String)
+    func availablePeersUpdate()
 }
 
-protocol BrowsingDelegate {
-    func didNotConnect(withMessage: String)
-}
+
 
 
 

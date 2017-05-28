@@ -80,14 +80,14 @@ class InstructionsView: UIView, BlipBloopView {
         soloMode.backgroundColor = colorScheme.model.baseColor
         soloMode.textColor = colorScheme.model.foregroundColor
         soloMode.font = UIFont(name: "TimeBurner", size: 20)
-        soloMode.text = "Solo Mode:\nPlay BlipBloop all by your lonesome"
+        soloMode.text = "Solo Mode:\nPlay BlipBloop all by your lonesome.\nNote: When you're in Solo Mode, you cannot be invited to parties."
         
         partyMode.isUserInteractionEnabled = false
         partyMode.textAlignment = .center
         partyMode.backgroundColor = colorScheme.model.baseColor
         partyMode.textColor = colorScheme.model.foregroundColor
         partyMode.font = UIFont(name: "TimeBurner", size: 20)
-        partyMode.text = "Create Party:\nYou can connect and play BlipBloop with anybody nearby on the same WIFI network,\nor via Bluetooth"
+        partyMode.text = "Create Party:\nYou can connect and play BlipBloop with anybody nearby on the same Wi-Fi network."
     }
 
 }
