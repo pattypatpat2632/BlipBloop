@@ -26,6 +26,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         makeAvailableForParties()
+        dashboardView.peerTable.reloadData()
     }
     
     func goToPartyMode() {

@@ -62,8 +62,7 @@ final class MultipeerManager: NSObject {
                 }
             }
         }
-        let usersNotInParty: [BlipUser] = allPeers.filter{!$0.isInParty}
-        availablePeers = usersNotInParty.filter{$0.invitesEnabled}
+        availablePeers = allPeers.filter{!$0.isInParty}.filter{$0.invitesEnabled}
         delegate?.availablePeersUpdate()
     }
     

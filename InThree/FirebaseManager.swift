@@ -65,7 +65,7 @@ final class FirebaseManager {
         let post = [
             "name": blipUser.name,
             "email": blipUser.email,
-            "invitedEnabled": blipUser.invitesEnabled,
+            "invitesEnabled": blipUser.invitesEnabled,
             "isInParty": blipUser.isInParty
             ] as [String : Any]
         dataRef.child("users").child(blipUser.uid).updateChildValues(post)
