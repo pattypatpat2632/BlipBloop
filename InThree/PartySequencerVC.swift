@@ -33,6 +33,7 @@ class PartySequencerVC: SequencerVC {
     
     override func returnToDashboard() {
         guard let currentUser = currentUser else {return}
+        FirebaseManager.sharedInstance.updateIsInParty(user: currentUser, with: false)
         sequencerEngine.generateSequence(fromScore: Score.empty)
         sequencerEngine.stopAll()
         self.dismiss(animated: true, completion: nil)
