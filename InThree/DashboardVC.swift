@@ -25,11 +25,10 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        FirebaseManager.sharedInstance.currentBlipUser?.isInParty = false
+        makeAvailableForParties()
     }
     
     func goToPartyMode() {
-        FirebaseManager.sharedInstance.currentBlipUser?.isInParty = true
         guard let currentUser = FirebaseManager.sharedInstance.currentBlipUser else {
             let message = "Connection lost, could not create party."
             alertUser(with: message, viewController: self, completion: nil)
@@ -38,7 +37,6 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
         PartyManager.sharedInstance.newParty(byUser: currentUser) { (partyID) in
             MultipeerManager.sharedInstance.invite(blipUsers: self.selectedPeers, toParty: PartyManager.sharedInstance.party)
             let partySequencerVC = PartySequencerVC()
-            partySequencerVC.connectedPeers = self.selectedPeers//TODO: this might be an error, check on it
             DispatchQueue.main.async {
                 self.present(partySequencerVC, animated: true, completion: nil)
                 partySequencerVC.partyID = partyID
@@ -75,6 +73,12 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
         }
     }
     
+    func makeAvailableForParties(){
+        if let currentUser = FirebaseManager.sharedInstance.currentBlipUser {
+            FirebaseManager.sharedInstance.updateIsInParty(user: currentUser, with: false)
+        }
+    }
+    
     func checkForLogin() {
         FirebaseManager.sharedInstance.checkForCurrentUser { (userExists) in
             if userExists {
@@ -83,6 +87,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
                 self.observeAllUsers()
                 self.setTableView()
                 self.setMultipeer()
+                self.makeAvailableForParties()
             } else {
                 NotificationCenter.default.post(name: .closeDashboardVC, object: nil)
             }

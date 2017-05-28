@@ -23,9 +23,11 @@ class SequencerVC: UIViewController, NoteButtonDelegate {
     
     
     override func viewDidLoad() {
-       
-        FirebaseManager.sharedInstance.currentBlipUser?.isInParty = true
-        super.viewDidLoad()
+       super.viewDidLoad()
+        if let currentUser = FirebaseManager.sharedInstance.currentBlipUser {
+            FirebaseManager.sharedInstance.updateIsInParty(user: currentUser, with: true)
+        }
+        
         self.view = sequencerView
         self.sequencerView.delegate = self
         self.navigationController?.navigationBar.isHidden = true

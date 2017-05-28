@@ -83,26 +83,27 @@ class DashboardView: UIView, BlipBloopView {
         logoutButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         logoutButton.topAnchor.constraint(equalTo: soloModeButton.bottomAnchor, constant: 20).isActive = true
         logoutButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
-        logoutButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
+        logoutButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05).isActive = true
         
         addSubview(instructionsButton)
         instructionsButton.translatesAutoresizingMaskIntoConstraints = false
         instructionsButton.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 5).isActive = true
         instructionsButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         instructionsButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
-        instructionsButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
+        instructionsButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05).isActive = true
         
     }
     
     private func setSubviewProperties() {
+        
+        partyLabel.text = "Select users to invite to a party:"
+        partyLabel.changeFontSize(to: 20)
+        
         partyModeButton.setTitle("Create Party", for: .normal)
         partyModeButton.addTarget(self, action: #selector(partyModeButtonPressed), for: .touchUpInside)
         
         soloModeButton.setTitle("Solo Mode", for: .normal)
         soloModeButton.addTarget(self, action: #selector(soloModeButtonPressed), for: .touchUpInside)
-        
-        partyLabel.text = "Select users to invite to a party:"
-        partyLabel.changeFontSize(to: 20)
         
         logoutButton.setTitle("Logout", for: .normal)
         logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)

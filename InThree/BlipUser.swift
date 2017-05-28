@@ -24,6 +24,7 @@ extension BlipUser {
         self.name = dictionary["name"] as? String ?? "No Name"
         self.email = dictionary["email"] as? String ?? "No Email"
         self.invitesEnabled = dictionary["invitesEnabled"] as? Bool ?? false
+        self.isInParty = dictionary["isInParty"] as? Bool ?? false
     }
     
     init?(jsonData: Data) {
@@ -42,6 +43,7 @@ extension BlipUser {
         self.name = properties["name"] as? String ?? "No name"
         self.email = properties["email"] as? String ?? "No email"
         self.invitesEnabled = properties["invitesEnabled"] as? Bool ?? false
+        self.isInParty = properties["isInParty"] as? Bool ?? false
     }
     
     func jsonData() -> Data? {
@@ -59,7 +61,9 @@ extension BlipUser {
         let dictionary: [String: Any] = [
             self.uid: [
                 "name": self.name,
-                "email": self.email
+                "email": self.email,
+                "isInParty": self.isInParty,
+                "invitesEnabled": self.invitesEnabled
             ]
         ]
         return dictionary

@@ -85,7 +85,7 @@ extension Party {
         self.creator = creator
         
         var members = [BlipUser]()
-        guard let membersDict = dictionary["members"] as? [String: [String: String]] else {return}
+        guard let membersDict = dictionary["members"] as? [String: [String: Any]] else {return}
         for (key, value) in membersDict {
             let newMember = BlipUser(uid: key, dictionary: value )
             members.append(newMember)

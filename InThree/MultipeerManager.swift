@@ -62,8 +62,8 @@ final class MultipeerManager: NSObject {
                 }
             }
         }
-        availablePeers = allPeers.filter{$0.invitesEnabled}
-        availablePeers.forEach{print($0.name)}
+        let usersNotInParty: [BlipUser] = allPeers.filter{!$0.isInParty}
+        availablePeers = usersNotInParty.filter{$0.invitesEnabled}
         delegate?.availablePeersUpdate()
     }
     
@@ -72,7 +72,9 @@ final class MultipeerManager: NSObject {
             print("Inviting users with valid party ID")
             do {
                 let json = try JSONSerialization.data(withJSONObject:["partyid": partyID] , options: [])
-                try session.send(json, toPeers: session.connectedPeers, with: .reliable)
+                let selectedUIDs = blipUsers.map{$0.uid}
+                let peers = session.connectedPeers.filter{selectedUIDs.contains($0.displayName)}
+                try session.send(json, toPeers: peers, with: .reliable)
             } catch {
                 print("could not convert party ID into JSON and send to connected peers")
             }

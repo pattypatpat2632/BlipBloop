@@ -65,7 +65,8 @@ final class FirebaseManager {
         let post = [
             "name": blipUser.name,
             "email": blipUser.email,
-            "invitedEnabled": blipUser.invitesEnabled
+            "invitedEnabled": blipUser.invitesEnabled,
+            "isInParty": blipUser.isInParty
             ] as [String : Any]
         dataRef.child("users").child(blipUser.uid).updateChildValues(post)
         completion()
@@ -165,6 +166,11 @@ extension FirebaseManager {
     func updateInviteable(user: BlipUser, with state: Bool) {
         userRef.child(user.uid).child("invitesEnabled").setValue(state)
     }
+    
+    func updateIsInParty(user: BlipUser, with state: Bool) {
+        userRef.child(user.uid).child("isInParty").setValue(state)
+    }
+    
 }
 
 protocol LocationManagerDelegate {
