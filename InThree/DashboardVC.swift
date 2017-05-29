@@ -62,7 +62,7 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     }
     
     func logout() {
-        
+        MultipeerManager.sharedInstance.stopBroadcasting {}
         FirebaseManager.sharedInstance.logoutUser { (response) in
             switch response {
             case .success(let logoutString):

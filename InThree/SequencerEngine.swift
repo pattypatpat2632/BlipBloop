@@ -65,7 +65,7 @@ struct SequencerEngine {
         var beatPostion = AKDuration(beats: 0)
         for beat in score.beats {
             var notePosition = AKDuration(beats: 0)
-            let noteDuration = AKDuration(beats: (1/beat.rhythm.rawValue))
+            let noteDuration = AKDuration(beats: (1/(beat.rhythm.rawValue + 0.01)))
             for note in beat.notes{
                 if note.noteOn {
                     sequencer.tracks[userNum].add(noteNumber: note.noteNumber, velocity: note.velocity, position: notePosition + beatPostion, duration: noteDuration)

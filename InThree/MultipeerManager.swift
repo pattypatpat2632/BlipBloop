@@ -55,6 +55,7 @@ final class MultipeerManager: NSObject {
     func stopBroadcasting(completion: () -> Void){
         serviceBrowser?.stopBrowsingForPeers()
         serviceAdvertiser?.stopAdvertisingPeer()
+        session.disconnect()
     }
     
     func updateAvailablePeers() {
