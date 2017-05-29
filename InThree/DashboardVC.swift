@@ -62,21 +62,27 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     }
     
     func logout() {
+        
         FirebaseManager.sharedInstance.logoutUser { (response) in
             switch response {
             case .success(let logoutString):
                 print(logoutString)
                 NotificationCenter.default.post(name: .closeDashboardVC, object: nil)
             case .failure(let failString):
-                print(failString)
+                self.alertUser(with: failString, viewController: self, completion: nil)
             }
         }
+        
     }
     
     func checkForLogin() {
         FirebaseManager.sharedInstance.checkForCurrentUser { (userExists) in
             if userExists {
                 self.view = self.dashboardView
+                FirebaseManager.sharedInstance.updateInviteable(user: FirebaseManager.sharedInstance.currentBlipUser!, with: self.dashboardView.enableInviteSwitch.isOn) //TODO: refactor
+                if self.isFirstResponder {
+                    FirebaseManager.sharedInstance.updateIsInParty(user: FirebaseManager.sharedInstance.currentBlipUser!, with: false)
+                }
                 self.dashboardView.delegate = self
                 self.observeAllUsers()
                 self.setTableView()

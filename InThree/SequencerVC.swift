@@ -12,7 +12,6 @@ import AudioKit
 
 class SequencerVC: UIViewController, NoteButtonDelegate {
     
-    
     var sequencerEngine = SequencerEngine()
     var sequencerView = SequencerView()
     var score = Score(rhythm: .four)

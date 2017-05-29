@@ -59,8 +59,7 @@ extension DashboardVC: MultipeerDelegate {
     
     func setMultipeer() {
         MultipeerManager.sharedInstance.delegate = self
-        MultipeerManager.sharedInstance.startAdvertising()
-        MultipeerManager.sharedInstance.startBrowsing()
+        MultipeerManager.sharedInstance.startBoardcasting()
     }
     
     func askPermission(fromInvitee invitee: BlipUser, completion: @escaping (Bool) -> Void) {

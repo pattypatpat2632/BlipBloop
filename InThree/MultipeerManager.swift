@@ -14,12 +14,12 @@ final class MultipeerManager: NSObject {
     static let sharedInstance = MultipeerManager()
     let service = "blipbloop-2632"
     var currentUser = FirebaseManager.sharedInstance.currentBlipUser
-    let myPeerID = MCPeerID(displayName: (FirebaseManager.sharedInstance.currentBlipUser?.uid)!)
+    var myPeerID = MCPeerID(displayName: FirebaseManager.sharedInstance.currentBlipUser!.uid)
     var availablePeers = [BlipUser]()
     
     var serviceAdvertiser: MCNearbyServiceAdvertiser?
     var serviceBrowser: MCNearbyServiceBrowser?
-
+    
     var delegate: MultipeerDelegate?
     
     lazy var session: MCSession = {
@@ -34,21 +34,26 @@ final class MultipeerManager: NSObject {
         super.init()
     }
     
-    func startBrowsing() {
-        serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: service)
-        serviceBrowser?.delegate = self
-        serviceBrowser?.startBrowsingForPeers()
-    }
-    
-    func startAdvertising() {
-        serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: service)
-        serviceAdvertiser?.delegate = self
-        serviceAdvertiser?.startAdvertisingPeer()
-    }
-    
     deinit {
         serviceAdvertiser?.stopAdvertisingPeer()
         serviceBrowser?.stopBrowsingForPeers()
+    }
+    
+    func startBoardcasting() {
+            //myPeerID = MCPeerID(displayName: FirebaseManager.sharedInstance.currentBlipUser!.uid)
+            serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: service)
+            serviceBrowser?.delegate = self
+            serviceBrowser?.startBrowsingForPeers()
+            
+            serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: service)
+            serviceAdvertiser?.delegate = self
+            serviceAdvertiser?.startAdvertisingPeer()
+
+    }
+    
+    func stopBroadcasting(completion: () -> Void){
+        serviceBrowser?.stopBrowsingForPeers()
+        serviceAdvertiser?.stopAdvertisingPeer()
     }
     
     func updateAvailablePeers() {
@@ -112,7 +117,7 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-
+        
         browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 30.0)
         
     }

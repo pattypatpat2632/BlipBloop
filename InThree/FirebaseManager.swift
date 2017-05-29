@@ -54,7 +54,7 @@ final class FirebaseManager {
                 let newBlipUser = BlipUser(name: name, uid: firUser.uid, email: email, isInParty: false, invitesEnabled: false)
                 self.storeNew(blipUser: newBlipUser) {
                     completion(.success("New user created: \(newBlipUser.name)"))
-                    self.observeCurrentBlipUser(uid: newBlipUser.uid, completion: {
+                    self.fetchCurrentBlipUser(uid: newBlipUser.uid, completion: {
                     })
                 }
             }
@@ -84,8 +84,8 @@ extension FirebaseManager {
                     completion(.failure("Could not log in user"))
                     return
                 }
-                self.observeCurrentBlipUser(uid: uid, completion: {
-                    completion(.success("Login successful for user: \(FirebaseManager.sharedInstance.currentBlipUser?.name ?? "No Name")"))
+                self.fetchCurrentBlipUser(uid: uid, completion: {
+                    completion(.success("Logged in user: \(FirebaseManager.sharedInstance.currentBlipUser?.name)"))
                 })
             }
         })
@@ -102,18 +102,19 @@ extension FirebaseManager {
     }
     
     func checkForCurrentUser(completion: @escaping (Bool) -> Void) {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+        print("checking if there is a current user logged in")
+        if let uid = FIRAuth.auth()?.currentUser?.uid {
+            self.fetchCurrentBlipUser(uid: uid, completion: {
+                completion(true)
+            })
+        } else {
             completion(false)
-            return
-        }
-        self.observeCurrentBlipUser(uid: uid) {
-            completion(true)
         }
     }
     
-    fileprivate func observeCurrentBlipUser(uid: String, completion: @escaping () -> Void) {
-        userRef.child(uid).observe(.value, with: { (snapshot) in
-            let userProperties = snapshot.value as? [String: String] ?? [:]
+    fileprivate func fetchCurrentBlipUser(uid: String, completion: @escaping () -> Void) {
+        userRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let userProperties = snapshot.value as? [String: Any] ?? [:]
             self.currentBlipUser = BlipUser(uid: uid, dictionary: userProperties)
             completion()
         })
