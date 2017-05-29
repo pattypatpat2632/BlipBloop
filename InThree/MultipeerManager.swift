@@ -15,6 +15,7 @@ final class MultipeerManager: NSObject {
     let service = "blipbloop-2632"
     var currentUser = FirebaseManager.sharedInstance.currentBlipUser
     var myPeerID = MCPeerID(displayName: FirebaseManager.sharedInstance.currentBlipUser!.uid)
+    var connectedPeers = [String]()
     var availablePeers = [BlipUser]()
     
     var serviceAdvertiser: MCNearbyServiceAdvertiser?
@@ -40,7 +41,7 @@ final class MultipeerManager: NSObject {
     }
     
     func startBoardcasting() {
-            //myPeerID = MCPeerID(displayName: FirebaseManager.sharedInstance.currentBlipUser!.uid)
+
             serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: service)
             serviceBrowser?.delegate = self
             serviceBrowser?.startBrowsingForPeers()
