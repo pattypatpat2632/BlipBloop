@@ -9,11 +9,12 @@
 import Foundation
 import AudioKit
 
+//Model for each beat
 struct Beat {
     
     var rhythm: Rhythm
     var notes = [Note]()
-    var beatNumber: AKDuration = AKDuration(beats: 0)
+    var beatNumber: AKDuration = AKDuration(beats: 0) //Index for beat within score
     
     mutating func setBeatNumber(to beatNumber: AKDuration) {
         self.beatNumber = beatNumber

@@ -319,14 +319,14 @@
 		EC4BD20C1EA29F990076B4D0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EC05C7621EA45AC20031864A /* Score.swift */,
-				ECFDC4821EA3295F00902F15 /* SequencerEngine.swift */,
-				EC05C7641EA460400031864A /* Beat.swift */,
 				EC05C7601EA4570D0031864A /* Rhythm.swift */,
+				EC7C14671EB780FF009FACDA /* SequencerMode.swift */,
+				EC05C7621EA45AC20031864A /* Score.swift */,
+				EC05C7641EA460400031864A /* Beat.swift */,
 				EC05C7661EA463A20031864A /* Note.swift */,
+				ECFDC4821EA3295F00902F15 /* SequencerEngine.swift */,
 				EC7FEDED1EAE59CF00E50A62 /* ColorSchemeModel.swift */,
 				EC5B3FA21EB0E25000410BD2 /* BlipUser.swift */,
-				EC7C14671EB780FF009FACDA /* SequencerMode.swift */,
 				ECA6D4A61EB914AB008A027B /* ScoreIndex.swift */,
 				EC74C8AA1EC1228E00666BDF /* LightTrigger.swift */,
 				EC9028B11EC35FB200027FCE /* Party.swift */,
@@ -348,9 +348,9 @@
 			isa = PBXGroup;
 			children = (
 				EC5B3FA01EB0E04E00410BD2 /* FirebaseResponse.swift */,
+				ECB181651EB2424E0025F017 /* MultipeerManager.swift */,
 				EC5B3FA41EB0E31100410BD2 /* FirebaseManager.swift */,
 				ECDADFDD1ECB5B6C00480BA3 /* PartyManager.swift */,
-				ECB181651EB2424E0025F017 /* MultipeerManager.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";

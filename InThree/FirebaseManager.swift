@@ -10,6 +10,8 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 
+
+//Singleton handles all authorization and user calls to Firebase
 final class FirebaseManager {
     
     static let sharedInstance = FirebaseManager()
@@ -19,10 +21,7 @@ final class FirebaseManager {
     let locationRef = FIRDatabase.database().reference().child("locations")
     var allBlipUsers = [BlipUser]()
     var inviteableUsers = [BlipUser]()
-    
-    var allLocationScores = [Score]()
     var currentBlipUser: BlipUser? = nil
-    var locationDelegate: LocationManagerDelegate?
     
     private init() {}
     
@@ -54,8 +53,7 @@ final class FirebaseManager {
                 let newBlipUser = BlipUser(name: name, uid: firUser.uid, email: email, isInParty: false, invitesEnabled: false)
                 self.storeNew(blipUser: newBlipUser) {
                     completion(.success("New user created: \(newBlipUser.name)"))
-                    self.fetchCurrentBlipUser(uid: newBlipUser.uid, completion: {
-                    })
+                    self.fetchCurrentBlipUser(uid: newBlipUser.uid, completion: nil)
                 }
             }
         })
@@ -85,12 +83,12 @@ extension FirebaseManager {
                     return
                 }
                 self.fetchCurrentBlipUser(uid: uid, completion: {
-                    completion(.success("Logged in user: \(FirebaseManager.sharedInstance.currentBlipUser?.name)"))
+                    completion(.success("Logged in user: \(String(describing: FirebaseManager.sharedInstance.currentBlipUser?.name))"))
                 })
             }
         })
     }
-    
+ 
     func logoutUser(completion: @escaping (FirebaseResponse) -> Void) {
         do {
             try FIRAuth.auth()?.signOut()
@@ -98,11 +96,10 @@ extension FirebaseManager {
         } catch {
             completion(.failure("Could not log out user"))
         }
-        
     }
     
+//checks to see if there is a current user logged in. If there is, set it to the current user property
     func checkForCurrentUser(completion: @escaping (Bool) -> Void) {
-        print("checking if there is a current user logged in")
         if let uid = FIRAuth.auth()?.currentUser?.uid {
             self.fetchCurrentBlipUser(uid: uid, completion: {
                 completion(true)
@@ -111,12 +108,15 @@ extension FirebaseManager {
             completion(false)
         }
     }
-    
-    fileprivate func fetchCurrentBlipUser(uid: String, completion: @escaping () -> Void) {
+
+    //helper function - fetches current user and sets it to current user property
+    fileprivate func fetchCurrentBlipUser(uid: String, completion: (() -> Void)?) {
         userRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             let userProperties = snapshot.value as? [String: Any] ?? [:]
             self.currentBlipUser = BlipUser(uid: uid, dictionary: userProperties)
-            completion()
+            if let completion = completion {
+                completion()
+            }
         })
     }
     
@@ -127,36 +127,6 @@ extension FirebaseManager {
             } else {
                 completion(.failure("Sorry, could not reset your password"))
             }
-        })
-    }
-}
-
-//MARK: City mode functions
-extension FirebaseManager {
-    
-    func send(score: Score, toUUID uuid: String) {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {return}
-        locationRef.child(uuid).child(uid).updateChildValues(score.asDictionary())
-    }
-    
-    func observeAllScoresIn(locationID lid: String) {
-        locationRef.observe(.value, with: { (snapshot) in
-            self.allLocationScores.removeAll()
-            let allLocations = snapshot.value as? [String: Any] ?? [:]
-            for location in allLocations {
-                if location.key == lid {
-                    let allUsersInLocation = location.value as? [String: Any] ?? [:]
-                    for user in allUsersInLocation {
-                        if user.key != self.currentBlipUser?.uid {
-                            let scoreDict = user.value as? [String: Any] ?? [:]
-                            if let newScore = Score(dictionary: scoreDict) {
-                                self.allLocationScores.append(newScore)
-                            }
-                        }
-                    }
-                }
-            }
-            self.locationDelegate?.updateLocationScores()
         })
     }
 }
@@ -172,10 +142,6 @@ extension FirebaseManager {
         userRef.child(user.uid).child("isInParty").setValue(state)
     }
     
-}
-
-protocol LocationManagerDelegate {
-    func updateLocationScores()
 }
 
 

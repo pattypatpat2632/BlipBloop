@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Model for BlipBloop user
 struct BlipUser {
     
     let name: String
@@ -16,7 +17,7 @@ struct BlipUser {
     var isInParty: Bool = false
     var invitesEnabled: Bool = false
 }
-
+//MARK: database functions
 extension BlipUser {
     
     init(uid: String, dictionary: [String: Any]) {

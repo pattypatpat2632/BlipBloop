@@ -95,8 +95,10 @@ class DashboardVC: UIViewController, DashboardViewDelegate, UserAlert {
     }
     
     func observeAllUsers() {
-        FirebaseManager.sharedInstance.observeAllBlipUsers { (_) in
-            //TODO: error handling
+
+        FirebaseManager.sharedInstance.observeAllBlipUsers { (response) in
+           //TODO: error handling
+
         }
     }
     

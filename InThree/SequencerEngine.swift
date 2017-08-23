@@ -86,8 +86,8 @@ struct SequencerEngine {
                 print("valid party iD for upload: \(partyID)")
                 PartyManager.sharedInstance.send(score: score, toPartyID: partyID)
             }
-        case .neighborhood(let hoodString):
-            FirebaseManager.sharedInstance.send(score: score, toUUID: hoodString)
+        case .neighborhood(let neighborString):
+            print(neighborString) //TODO: implement when location mode functions
         case .solo:
             print("solo mode, no data sent")
         }
