@@ -9,6 +9,7 @@
 import Foundation
 import AudioKit
 
+//Model for an individual user's score
 struct Score {
     
     var beats = [Beat]()
@@ -23,7 +24,7 @@ struct Score {
 }
 
 extension Score {
-    init?(dictionary: [String: Any]) {
+    init?(dictionary: [String: Any]) { //Init from database
         guard let beats = dictionary["beats"] as? [[String: Any]] else {return nil}
         for beat in beats {
             guard let newBeat = Beat(dictionary: beat) else { return nil }
@@ -31,14 +32,14 @@ extension Score {
         }
     }
     
-    init(rhythm: Rhythm) {
+    init(rhythm: Rhythm) { //Initialize score with four beats
         self.add(beat: Beat(rhythm: rhythm))
         self.add(beat: Beat(rhythm: rhythm))
         self.add(beat: Beat(rhythm: rhythm))
         self.add(beat: Beat(rhythm: rhythm))
     }
 }
-
+//MARK: database functions
 extension Score {
     
     func asDictionary() -> [String: Any] {
@@ -64,14 +65,7 @@ extension Score {
         }
     }
     
-    static func random() -> Score {
-        let beat0 = Beat.randomBeat()
-        let beat1 = Beat.randomBeat(position: 1)
-        let beat2 = Beat.randomBeat(position: 2)
-        let beat3 = Beat.randomBeat(position: 3)
-        return Score(beats: [beat0, beat1, beat2, beat3])
-    }
-    
+    //MARK: mutating functions
     mutating func addStep(toBeatNum beatNum: Int, newRhythm: Rhythm) {
         let note = Note(noteOn: false, noteNumber: 0, velocity: 127)
         beats[beatNum].add(note: note, forNewRhythm: newRhythm)
@@ -83,5 +77,13 @@ extension Score {
 }
 
 extension Score{
-    static let empty = Score(rhythm: .four)
+    static let empty = Score(rhythm: .four) //Static constant representing an empty score
+    
+    static func random() -> Score { //Static constant representing a random score
+        let beat0 = Beat.randomBeat()
+        let beat1 = Beat.randomBeat(position: 1)
+        let beat2 = Beat.randomBeat(position: 2)
+        let beat3 = Beat.randomBeat(position: 3)
+        return Score(beats: [beat0, beat1, beat2, beat3])
+    }
 }

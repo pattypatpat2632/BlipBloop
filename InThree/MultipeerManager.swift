@@ -9,9 +9,11 @@
 import Foundation
 import MultipeerConnectivity
 
+//Singleton handles multipeer connectivity
 final class MultipeerManager: NSObject {
     
     static let sharedInstance = MultipeerManager()
+    let firManager = FirebaseManager.sharedInstance
     let service = "blipbloop-2632"
     var currentUser = FirebaseManager.sharedInstance.currentBlipUser
     var myPeerID = MCPeerID(displayName: FirebaseManager.sharedInstance.currentBlipUser!.uid)
@@ -39,8 +41,8 @@ final class MultipeerManager: NSObject {
         serviceAdvertiser?.stopAdvertisingPeer()
         serviceBrowser?.stopBrowsingForPeers()
     }
-    
-    func startBoardcasting() {
+   
+    func startBoardcasting() { //Start looking for peers
 
             serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: service)
             serviceBrowser?.delegate = self
@@ -57,23 +59,17 @@ final class MultipeerManager: NSObject {
         serviceAdvertiser?.stopAdvertisingPeer()
         session.disconnect()
     }
-    
-    func updateAvailablePeers() {
-        print("UPDATING AVAILABLE PEERS")
+
+    func updateAvailablePeers() { //helper function to update what peers can be connected to a party
         availablePeers.removeAll()
         var allPeers = [BlipUser]()
-        for peer in session.connectedPeers {
-            for user in FirebaseManager.sharedInstance.allBlipUsers {
-                if user.uid == peer.displayName {
-                    allPeers.append(user)
-                }
-            }
-        }
+        let connectedUIDs = session.connectedPeers.map{$0.displayName}
+        allPeers = firManager.allBlipUsers.filter{connectedUIDs.contains($0.uid)}
         availablePeers = allPeers.filter{!$0.isInParty}.filter{$0.invitesEnabled}
         delegate?.availablePeersUpdate()
     }
     
-    func invite(blipUsers: [BlipUser], toParty party: Party) {
+    func invite(blipUsers: [BlipUser], toParty party: Party) { //Invite a user to join a party
         if let partyID = party.id {
             print("Inviting users with valid party ID")
             do {
@@ -147,7 +143,6 @@ extension MultipeerManager: MCSessionDelegate {
         case .connecting:
             print("connecting")
         case .connected:
-            //add(peerID: peerID.displayName)
             print("connected")
             self.updateAvailablePeers()
         }

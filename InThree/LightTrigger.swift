@@ -19,7 +19,7 @@ class LightTrigger {
     }
     
     func start() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (_) in
             self.delegate?.fired()
         }
     }
@@ -30,7 +30,5 @@ class LightTrigger {
 }
 
 protocol LightTriggerDelegate {
-    
     func fired()
-    
 }

@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 
+//Singleton handles all calls to party endpoint in firebase database
 final class PartyManager {
     
     static let sharedInstance = PartyManager()
