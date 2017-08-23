@@ -31,11 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillResignActive(_ application: UIApplication) {
         
-         try! FIRAuth.auth()?.signOut() //TODO: Remove, temporary logout until app function is in place
+        
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        try! FIRAuth.auth()?.signOut() //TODO: Remove, temporary logout until app function is in place
+        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
